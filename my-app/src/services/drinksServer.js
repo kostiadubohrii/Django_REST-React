@@ -29,6 +29,17 @@ const useDrinksServer = () => {
         })
 
     }
+
+    const getUsers = async () => {
+        try {
+            const response = await axios.get(`${_apiBase}users/`);
+            return response.data.map(_transformUsers);
+        } catch (error) {
+            console.error(error)
+            return []
+        }
+    }
+
     
 
     const _transformDrinks = (drink) => {
@@ -40,10 +51,20 @@ const useDrinksServer = () => {
         }
     }
 
+
+    const _transformUsers = (user) => {
+        return {
+            id: user.id,
+            name: user.name,
+            password: user.password
+        }
+    }
+
     return {
         getAllDrinks,
         getDrink,
         sendDrink,
+        getUsers
     }
 }
 
